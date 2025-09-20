@@ -28,12 +28,12 @@ export default function RootLayout({
           data-include-search-params="true"
           data-only-in-iframe="true"
           data-debug="true"
-          data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
+          data-custom-data='{"appName": "ZetaZen", "version": "1.0.0", "greeting": "hi"}'
         />
         {/* Simple header navigation */}
         <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b">
           <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
-            <Link href="/" className="font-semibold">Bloom</Link>
+            <Link href="/" className="font-semibold">ZetaZen</Link>
             <nav className="flex items-center gap-3 text-sm">
               <Link href="/resources" className="hover:underline">Resources</Link>
               <Link href="/journal" className="hover:underline">Journal</Link>

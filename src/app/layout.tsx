@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Bloom – Youth Mental Wellness",
+  title: "ZetaZen – Youth Mental Wellness",
   description: "Confidential, empathetic AI support for youth mental wellness with anonymous chat, mood journal, culturally sensitive resources, and crisis help.",
 };
 

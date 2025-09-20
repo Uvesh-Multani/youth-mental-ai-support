@@ -19,7 +19,7 @@ export default function Home() {
             <span>Made for Indian youth — private & stigma‑free</span>
           </div>
           <h1 className="mt-4 text-4xl md:text-6xl font-bold tracking-tight">
-            Bloom: Confidential support for your feelings
+            ZetaZen: Confidential support for your feelings
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
             An empathetic AI that listens, helps you name what you feel, suggests simple next steps, and connects you with the right resources.

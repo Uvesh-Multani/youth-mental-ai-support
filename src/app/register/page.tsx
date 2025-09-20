@@ -63,7 +63,7 @@ export default function RegisterPage() {
         <Card className="shadow-lg border-border/60">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Create your account</CardTitle>
-            <CardDescription>Join Bloom to save your preferences across devices.</CardDescription>
+            <CardDescription>Join ZetaZen to save your preferences across devices.</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">

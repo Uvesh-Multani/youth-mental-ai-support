@@ -1,4 +1,4 @@
-use client
+"use client";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";

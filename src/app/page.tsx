@@ -151,6 +151,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
+      <section className="mx-auto max-w-6xl px-6 py-16 bg-gradient-to-b from-background to-secondary/10">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What young users are saying</h2>
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="rounded-2xl border p-6 bg-card/80 backdrop-blur hover:shadow-lg transition-all">
+            <p className="text-lg leading-relaxed italic mb-4">"ZetaZen gets the pressure of JEE prep and family expectations. The AI actually listens without judging—it's helped me open up more."</p>
+            <p className="text-sm font-medium text-primary">— Aarav, 17, Mumbai</p>
+          </div>
+          <div className="rounded-2xl border p-6 bg-card/80 backdrop-blur hover:shadow-lg transition-all">
+            <p className="text-lg leading-relaxed italic mb-4">"During a tough time with friends, the mood journal showed me patterns I didn't notice. Plus, the breathing tips are simple but work."</p>
+            <p className="text-sm font-medium text-primary">— Priya, 16, Delhi</p>
+          </div>
+          <div className="rounded-2xl border p-6 bg-card/80 backdrop-blur hover:shadow-lg transition-all">
+            <p className="text-lg leading-relaxed italic mb-4">"I was scared to talk about anxiety, but ZetaZen made it easy. The crisis resources gave me numbers I actually called."</p>
+            <p className="text-sm font-medium text-primary">— Karan, 18, Bangalore</p>
+          </div>
+        </div>
+      </section>
+
       {/* TESTIMONIAL */}
       <section className="mx-auto max-w-5xl px-6 pb-16">
         <div className="rounded-2xl border p-8 bg-secondary/40 backdrop-blur-sm hover:shadow-xl transition-all duration-300">

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { MessageSquare, BookOpen, FileText, User } from "lucide-react";
+import { MessageSquare, BookOpen, FileText, User, HeartHandshake } from "lucide-react";
 
 export default function Home() {
   const { data: session, isPending } = useSession();
@@ -43,53 +43,70 @@ export default function Home() {
 
       {/* Dashboard Grid */}
       <section className="mx-auto max-w-6xl px-6 py-12 md:py-16">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Chat Card */}
-          <Link href="/chat" className="group rounded-xl border bg-card p-6 hover:shadow-md transition-shadow">
+          <Link href="/chat" className="group rounded-xl border bg-gradient-to-br from-primary/5 to-secondary/5 p-6 hover:shadow-xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
-              <MessageSquare className="h-6 w-6 text-primary" />
-              <h3 className="font-semibold">AI Chat</h3>
+              <MessageSquare className="h-6 w-6 bg-primary/10 p-2 rounded-lg text-primary" />
+              <h3 className="font-semibold text-foreground">AI Companion</h3>
             </div>
-            <p className="text-muted-foreground text-sm">Talk to your empathetic AI companion</p>
+            <p className="text-muted-foreground">Your 24/7 empathetic listener for any feeling.</p>
           </Link>
 
           {/* Journal Card */}
-          <Link href="/journal" className="group rounded-xl border bg-card p-6 hover:shadow-md transition-shadow">
+          <Link href="/journal" className="group rounded-xl border bg-gradient-to-br from-primary/5 to-secondary/5 p-6 hover:shadow-xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
-              <BookOpen className="h-6 w-6 text-primary" />
-              <h3 className="font-semibold">Mood Journal</h3>
+              <BookOpen className="h-6 w-6 bg-green-500/10 p-2 rounded-lg text-green-600" />
+              <h3 className="font-semibold text-foreground">Mood Tracker</h3>
             </div>
-            <p className="text-muted-foreground text-sm">Track your feelings and see patterns</p>
+            <p className="text-muted-foreground">Log emotions and uncover helpful patterns.</p>
           </Link>
 
           {/* Resources Card */}
-          <Link href="/resources" className="group rounded-xl border bg-card p-6 hover:shadow-md transition-shadow">
+          <Link href="/resources" className="group rounded-xl border bg-gradient-to-br from-primary/5 to-secondary/5 p-6 hover:shadow-xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
-              <FileText className="h-6 w-6 text-primary" />
-              <h3 className="font-semibold">Resources</h3>
+              <FileText className="h-6 w-6 bg-blue-500/10 p-2 rounded-lg text-blue-600" />
+              <h3 className="font-semibold text-foreground">Learning Hub</h3>
             </div>
-            <p className="text-muted-foreground text-sm">Guides, tips, and support info</p>
+            <p className="text-muted-foreground">Curated guides tailored for Indian youth.</p>
           </Link>
 
           {/* Profile Card */}
-          <Link href="/profile" className="group rounded-xl border bg-card p-6 hover:shadow-md transition-shadow">
+          <Link href="/profile" className="group rounded-xl border bg-gradient-to-br from-primary/5 to-secondary/5 p-6 hover:shadow-xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
-              <User className="h-6 w-6 text-primary" />
-              <h3 className="font-semibold">Profile</h3>
+              <User className="h-6 w-6 bg-purple-500/10 p-2 rounded-lg text-purple-600" />
+              <h3 className="font-semibold text-foreground">Your Profile</h3>
             </div>
-            <p className="text-muted-foreground text-sm">Manage your account and settings</p>
+            <p className="text-muted-foreground">Personalize your experience and settings.</p>
           </Link>
         </div>
 
         {/* Quick Stats or Tips - Optional */}
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border bg-card p-6">
-            <h4 className="font-semibold mb-2">Quick Tip</h4>
-            <p className="text-muted-foreground text-sm">Take a deep breath: In for 4, hold for 4, out for 4.</p>
+        <section className="mt-12 bg-secondary/20 rounded-2xl p-6">
+          <h4 className="text-xl font-semibold mb-4">Your Recent Activity</h4>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-lg border p-4 bg-card">
+              <p className="text-sm text-muted-foreground mb-1">Last Chat</p>
+              <p className="font-medium">You discussed exam stress – great start!</p>
+            </div>
+            <div className="rounded-lg border p-4 bg-card">
+              <p className="text-sm text-muted-foreground mb-1">Mood Streak</p>
+              <p className="font-medium text-green-600">3 days consistent – You're building habits!</p>
+            </div>
           </div>
-          <div className="rounded-xl border bg-primary/5 p-6">
-            <h4 className="font-semibold mb-2 text-primary">Your Progress</h4>
-            <p className="text-primary/80 text-sm">You've logged 5 moods this week. Keep going!</p>
+        </section>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-xl border bg-gradient-to-r from-green-500/5 p-6">
+            <h4 className="font-semibold mb-2 flex items-center gap-2 text-green-600">
+              <HeartHandshake className="h-4 w-4" />
+              Daily Tip
+            </h4>
+            <p className="text-sm">Practice gratitude: Name 3 things you're thankful for today.</p>
+          </div>
+          <div className="rounded-xl border bg-primary/10 p-6">
+            <h4 className="font-semibold mb-2 text-primary">Progress Overview</h4>
+            <p className="text-primary/80 text-sm">You've engaged 7 times this week. Keep nurturing your wellness!</p>
           </div>
         </div>
       </section>

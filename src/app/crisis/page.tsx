@@ -1,7 +1,25 @@
 "use client";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Link from "next/link";
 
 export default function CrisisPage() {
+  const { data: session, isPending } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.push("/login");
+    }
+  }, [session, isPending, router]);
+
+  if (isPending) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
+  if (!session?.user) return null;
+
   return (
     <div className="min-h-screen mx-auto max-w-4xl px-6 py-12">
       <h1 className="text-3xl md:text-4xl font-bold">Crisis Support</h1>
@@ -29,7 +47,7 @@ export default function CrisisPage() {
           <li>Touch 4 things: notice texture and temperature.</li>
           <li>Listen for 3 sounds around you.</li>
           <li>Take 2 deep breaths—inhale 4, exhale 6.</li>
-          <li>Say 1 kind thing to yourself: “I deserve care.”</li>
+          <li>Say 1 kind thing to yourself: "I deserve care."</li>
         </ol>
       </section>
 

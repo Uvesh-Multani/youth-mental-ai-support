@@ -1,8 +1,26 @@
 "use client";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Link from "next/link";
 import { BookOpen, Brain, HeartHandshake, GraduationCap, PhoneCall, Headphones, Search, ArrowRight, MessageSquare } from "lucide-react";
 
 export default function ResourcesPage() {
+  const { data: session, isPending } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.push("/login");
+    }
+  }, [session, isPending, router]);
+
+  if (isPending) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
+  if (!session?.user) return null;
+
   return (
     <div className="min-h-screen">
       <header className="relative overflow-hidden">

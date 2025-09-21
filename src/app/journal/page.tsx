@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 import Link from "next/link";
 
 type Mood = "happy" | "okay" | "sad" | "anxious" | "angry" | "stressed" | "lonely" | "tired";
@@ -9,9 +11,22 @@ type Entry = { mood: Mood; note?: string; ts: number };
 const STORAGE_KEY = "mood_journal_entries";
 
 export default function JournalPage() {
+  const { data: session, isPending: sessionPending } = useSession();
+  const router = useRouter();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!sessionPending && !session?.user) {
+      router.push("/login");
+      return;
+    }
+  }, [session, sessionPending, router]);
+
+  if (sessionPending || !session?.user) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
 
   function getAnonId() {
     try {

@@ -5,6 +5,7 @@ import ErrorReporter from "@/components/ErrorReporter";
 import Script from "next/script";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/sonner";
+import NavBar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "ZetaZen – Youth Mental Wellness",
@@ -34,16 +35,7 @@ export default function RootLayout({
         <header className="sticky top-0 z-40 bg-background/80 backdrop-blur border-b">
           <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
             <Link href="/" className="font-semibold">ZetaZen</Link>
-            <nav className="flex items-center gap-3 text-sm">
-              <Link href="/resources" className="hover:underline">Resources</Link>
-              <Link href="/journal" className="hover:underline">Journal</Link>
-              <Link href="/chat" className="hover:underline">Chat</Link>
-              <Link href="/crisis" className="hover:underline">Crisis</Link>
-              <span className="mx-2 text-muted-foreground">|</span>
-              <Link href="/login" className="rounded-md border px-3 py-1.5">Login</Link>
-              <Link href="/register" className="rounded-md bg-primary text-primary-foreground px-3 py-1.5">Sign up</Link>
-              <Link href="/profile" className="hidden sm:inline hover:underline">Profile</Link>
-            </nav>
+            <NavBar />
           </div>
         </header>
         {children}

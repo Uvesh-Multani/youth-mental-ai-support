@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (session?.user) {
-      router.replace("/profile");
+      router.replace("/home");
     }
   }, [session, router]);
 
@@ -41,16 +41,16 @@ export default function LoginPage() {
         email,
         password,
         rememberMe,
-        callbackURL: "/profile",
+        callbackURL: "/home",
       });
 
       if (error?.code) {
-        toast.error("Invalid email or password. Please try again.");
+        toast.error("Invalid email or password. Please make sure you have already registered an account and try again.");
         return;
       }
 
       toast.success("Welcome back!");
-      router.replace("/profile");
+      router.replace("/home");
     } catch (err) {
       toast.error("Login failed. Please try again.");
     } finally {

@@ -1,8 +1,13 @@
 "use client"
 
+// VariantProps utility type for class-variance-authority v0.7+
+type VariantProps<T> = T extends (...args: any[]) => { variants: infer V }
+  ? { [K in keyof V]?: V[K] extends Record<string, any> ? keyof V[K] : V[K] }
+  : never;
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 import { PanelLeftIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -507,7 +512,9 @@ function SidebarMenuButton({
   asChild?: boolean
   isActive?: boolean
   tooltip?: string | React.ComponentProps<typeof TooltipContent>
-} & VariantProps<typeof sidebarMenuButtonVariants>) {
+  variant?: "default" | "outline"
+  size?: "default" | "sm" | "lg"
+} ) {
   const Comp = asChild ? Slot : "button"
   const { isMobile, state } = useSidebar()
 

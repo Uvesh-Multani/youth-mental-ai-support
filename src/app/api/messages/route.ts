@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
 import { messages, sessions } from '@/db/schema';
-import { eq, lt, and, asc } from 'drizzle-orm';
+import { SQL, eq, lt, and, asc } from 'drizzle-orm';
 
 async function validateSession(request: NextRequest) {
   const authorization = request.headers.get('authorization');
@@ -10,17 +10,17 @@ async function validateSession(request: NextRequest) {
   }
 
   const anonId = authorization.substring(7); // Remove 'Bearer ' prefix
-  
+
   try {
     const existingSession = await db.select()
       .from(sessions)
       .where(eq(sessions.anonId, anonId))
       .limit(1);
-      
+
     if (existingSession.length === 0) {
       return { error: 'Session not found' };
     }
-    
+
     return { session: existingSession[0] };
   } catch (err) {
     console.error('Session validation error:', err);
@@ -31,11 +31,13 @@ async function validateSession(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const sessionRes = await validateSession(request);
   if ('error' in sessionRes) {
-    return NextResponse.json({ error: sessionRes.error }, { status: sessionRes.error.includes('Authorization') ? 401 : 404 });
+    const errorMsg = sessionRes.error ?? '';
+    return NextResponse.json({ error: errorMsg }, { status: errorMsg.includes('Authorization') ? 401 : 404 });
   }
-  
+
+
   const { session } = sessionRes;
-  
+
   // Update lastSeenAt
   await db.update(sessions)
     .set({ lastSeenAt: Date.now() })
@@ -47,37 +49,38 @@ export async function GET(request: NextRequest) {
 
   const limit = Math.min(parseInt(limitStr || '50'), 200);
   const before = beforeStr ? parseInt(beforeStr) : undefined;
-  
+
   if (before !== undefined && isNaN(before)) {
     return NextResponse.json({ error: 'Invalid before parameter' }, { status: 400 });
   }
 
   try {
-    let query = db.select()
-      .from(messages)
-      .where(eq(messages.sessionId, session.id));
-      
+    let condition: SQL<unknown> = eq(messages.sessionId, session.id);
     if (before !== undefined) {
-      query = query.where(and(eq(messages.sessionId, session.id), lt(messages.timestamp, before)));
+      condition = and(condition, lt(messages.timestamp, before)) as SQL<unknown>;
     }
-    
-    const rows = await query
-      .orderBy(asc(messages.timestamp))
-      .limit(limit);
 
-    return NextResponse.json(rows);
-  } catch (err) {
-    console.error('GET /api/messages error:', err);
-    return NextResponse.json({ error: 'Internal server error: ' + err }, { status: 500 });
-  }
+    const rows = await db.select()
+    .from(messages)
+    .where(condition)
+    .orderBy(asc(messages.timestamp))
+    .limit(limit);
+
+  return NextResponse.json(rows);
+} catch (err) {
+  console.error('GET /api/messages error:', err);
+  return NextResponse.json({ error: 'Internal server error: ' + err }, { status: 500 });
+}
 }
 
 export async function POST(request: NextRequest) {
   const sessionRes = await validateSession(request);
   if ('error' in sessionRes) {
-    return NextResponse.json({ error: sessionRes.error }, { status: sessionRes.error.includes('Authorization') ? 401 : 404 });
+    const errorMsg = sessionRes.error ?? '';
+    return NextResponse.json({ error: errorMsg }, { status: errorMsg.includes('Authorization') ? 401 : 404 });
   }
-  
+
+
   const { session } = sessionRes;
 
   let body;
@@ -98,7 +101,7 @@ export async function POST(request: NextRequest) {
   if (!content || typeof content !== 'string' || content.length === 0) {
     return NextResponse.json({ error: 'content cannot be empty' }, { status: 400 });
   }
-  
+
   if (content.length > 4000) {
     return NextResponse.json({ error: 'content exceeds 4000 characters' }, { status: 400 });
   }
@@ -124,7 +127,7 @@ export async function POST(request: NextRequest) {
         timestamp,
       })
       .returning();
-      
+
     return NextResponse.json(inserted[0], { status: 201 });
   } catch (err) {
     console.error('POST /api/messages error:', err);

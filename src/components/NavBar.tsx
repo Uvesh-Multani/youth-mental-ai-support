@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { User, LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";

@@ -24,10 +24,6 @@ export default function JournalPage() {
     }
   }, [session, sessionPending, router]);
 
-  if (sessionPending || !session?.user) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
-  }
-
   function getAnonId() {
     try {
       let id = localStorage.getItem("anon_id");
@@ -60,6 +56,7 @@ export default function JournalPage() {
     })();
   }, []);
 
+  // Move useMemo here — before any early return
   const stats = useMemo(() => {
     const counts: Record<Mood, number> = {
       happy: 0,
@@ -76,6 +73,10 @@ export default function JournalPage() {
     return { counts, max };
   }, [entries]);
 
+  if (sessionPending || !session?.user) {
+    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+  }
+
   async function clearAll() {
     const anonId = getAnonId();
     try {
@@ -90,7 +91,9 @@ export default function JournalPage() {
   return (
     <div className="min-h-screen mx-auto max-w-5xl px-6 py-12">
       <h1 className="text-3xl md:text-4xl font-bold">Mood Journal</h1>
-      <p className="mt-2 text-muted-foreground">Anonymous with a random ID. Your entries are private to your session.</p>
+      <p className="mt-2 text-muted-foreground">
+        Anonymous with a random ID. Your entries are private to your session.
+      </p>
 
       <section className="mt-8 rounded-lg border p-5">
         <h2 className="text-xl font-semibold">Mood overview</h2>
@@ -115,11 +118,15 @@ export default function JournalPage() {
       <section className="mt-8 rounded-lg border p-5">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Recent entries</h2>
-          <button onClick={clearAll} className="rounded-md border px-3 py-1.5 text-sm">Clear all</button>
+          <button onClick={clearAll} className="rounded-md border px-3 py-1.5 text-sm">
+            Clear all
+          </button>
         </div>
         <ul className="mt-4 divide-y">
           {entries.length === 0 && !loading && (
-            <li className="py-6 text-muted-foreground">No entries yet. Start by chatting or quick‑logging a mood on the home page.</li>
+            <li className="py-6 text-muted-foreground">
+              No entries yet. Start by chatting or quick‑logging a mood on the home page.
+            </li>
           )}
           {entries
             .slice()
@@ -138,9 +145,15 @@ export default function JournalPage() {
       </section>
 
       <div className="mt-8 flex gap-3">
-        <Link href="/" className="rounded-md border px-4 py-2">Back home</Link>
-        <Link href="/resources" className="rounded-md border px-4 py-2">Resources</Link>
-        <Link href="/crisis" className="rounded-md border px-4 py-2">Crisis support</Link>
+        <Link href="/" className="rounded-md border px-4 py-2">
+          Back home
+        </Link>
+        <Link href="/resources" className="rounded-md border px-4 py-2">
+          Resources
+        </Link>
+        <Link href="/crisis" className="rounded-md border px-4 py-2">
+          Crisis support
+        </Link>
       </div>
     </div>
   );

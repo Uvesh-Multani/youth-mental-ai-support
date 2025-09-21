@@ -31,7 +31,8 @@ async function validateSession(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const sessionRes = await validateSession(request);
   if ('error' in sessionRes) {
-    return NextResponse.json({ error: sessionRes.error }, { status: sessionRes.error.includes('Authorization') ? 401 : 404 });
+    const errorMsg = sessionRes.error ?? '';
+    return NextResponse.json({ error: errorMsg }, { status: errorMsg.includes('Authorization') ? 401 : 404 });
   }
   
   const { session } = sessionRes;
@@ -77,7 +78,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const sessionRes = await validateSession(request);
   if ('error' in sessionRes) {
-    return NextResponse.json({ error: sessionRes.error }, { status: sessionRes.error.includes('Authorization') ? 401 : 404 });
+    const errorMsg = sessionRes.error ?? '';
+    return NextResponse.json({ error: errorMsg }, { status: errorMsg.includes('Authorization') ? 401 : 404 });
   }
   
   const { session } = sessionRes;
@@ -134,7 +136,8 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const sessionRes = await validateSession(request);
   if ('error' in sessionRes) {
-    return NextResponse.json({ error: sessionRes.error }, { status: sessionRes.error.includes('Authorization') ? 401 : 404 });
+    const errorMsg = sessionRes.error ?? '';
+    return NextResponse.json({ error: errorMsg }, { status: errorMsg.includes('Authorization') ? 401 : 404 });
   }
   
   const { session } = sessionRes;
